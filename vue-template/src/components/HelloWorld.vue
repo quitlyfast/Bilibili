@@ -1,6 +1,7 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
+    <el-button type="danger">红色按钮</el-button>
     <p>
       For a guide and recipes on how to configure / customize this project,<br>
       check out the
@@ -33,10 +34,27 @@
 </template>
 
 <script>
+import { getSms } from '@/api/login'
 export default {
   name: 'HelloWorld',
   props: {
     msg: String
+  },
+  methods: {
+
+  },
+  mounted () {
+    // console.log(this.$root)
+    // console.log(process.env.NODE_ENV)
+    // console.log(process.env.VUE_APP_API)
+    getSms()
+      .then(() => {
+        this.$cookies.setCookieFn('token', 1111)
+        this.$store.commit('login/SET_TOKEN', 1111)
+      })
+      .catch(error => {
+        console.log(error)
+      })
   }
 }
 </script>
